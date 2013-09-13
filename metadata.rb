@@ -1,5 +1,5 @@
-name             'COOKBOOK_NAME'
+name             'logadm'
 license          'All rights reserved'
-description      'Installs/Configures COOKBOOK_NAME'
+description      'Installs/Configures logadm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.0.0'
