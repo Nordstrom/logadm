@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: logadm
-# Recipe:: default
-#
 # Copyright (c) 2013 ModCloth, Inc.
 #
 # MIT License
@@ -25,9 +22,22 @@
 # SOFTWARE.
 #
 
-template node['logadm']['conf_file'] do
-  source node['logadm']['conf_file_template']
-  cookbook node['logadm']['conf_file_cookbook']
-  mode 0644
-  only_if { node['logadm']['write_conf_file'] }
-end
+default['logadm']['write_conf_file'] = true
+default['logadm']['conf_file'] = '/etc/logadm.conf'
+default['logadm']['conf_file_template'] = 'logadm.conf.erb'
+default['logadm']['conf_file_cookbook'] = 'logadm'
+
+default['logadm']['enabled_patterns']['smf'] = true
+default['logadm']['enabled_patterns']['apache'] = false
+default['logadm']['enabled_patterns']['lighttpd'] = false
+default['logadm']['enabled_patterns']['nginx'] = false
+default['logadm']['enabled_patterns']['mysql'] = false
+
+default['logadm']['patterns']['smf'] = '-C 3 -c -s 1m /var/svc/log/*.log'
+default['logadm']['patterns']['apache'] = '-C 5 -c -s 100m /var/log/httpd/*.log'
+default['logadm']['patterns']['lighttpd'] =
+  "-C 5 -c -s 100m '/var/log/lighttpd/{access,error}.log'"
+default['logadm']['patterns']['nginx'] =
+  "-C 5 -c -s 100m '/var/log/nginx/{access,error}.log'"
+default['logadm']['patterns']['mysql'] =
+  "-C 5 -c -s 100m '/var/log/mysql/{error,slowquery}.log'"
