@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: logadm
-# Recipe:: default
+# Recipe:: chef-client
 #
 # Copyright (c) 2013 ModCloth, Inc.
 #
@@ -25,9 +25,12 @@
 # SOFTWARE.
 #
 
-template node['logadm']['conf_file'] do
-  source node['logadm']['conf_file_template']
-  cookbook node['logadm']['conf_file_cookbook']
-  mode 0644
-  only_if { node['logadm']['write_conf_file'] }
+include_recipe 'logadm::default'
+
+logadm 'chef-client' do
+  path '/var/log/chef/client.log'
+  copy true
+  size '1b'
+  period '7d'
+  action :create
 end
