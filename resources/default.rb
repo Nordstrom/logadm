@@ -79,3 +79,4 @@ attribute :period, :regex => /^[0-9]+[hdwmy]$/
 attribute :copy, :default => true
 attribute :template, :kind_of => String
 attribute :gzip, :kind_of => Integer
+attribute :mode, :regex => /^0?\d{3,4}$/
