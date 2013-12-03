@@ -30,6 +30,7 @@ action :create do
     args = []
     args << "-c" if new_resource.copy
     args << " -C #{new_resource.count}" if new_resource.count
+    args << " -m #{new_resource.mode}"  if new_resource.mode
     args << " -s #{new_resource.size}"  if new_resource.size
     args << " -p #{new_resource.period}"  if new_resource.period
     args << " -t #{new_resource.template}"  if new_resource.template
