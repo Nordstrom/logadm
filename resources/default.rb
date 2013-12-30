@@ -77,6 +77,7 @@ attribute :size, :regex => /^[0-9]+[bkmg]$/
 # later should add now and never for period
 attribute :period, :regex => /^[0-9]+[hdwmy]$/
 attribute :copy, :default => true
+attribute :nofileok, :default => false
 attribute :template, :kind_of => String
 attribute :gzip, :kind_of => Integer
 attribute :mode, :regex => /^0?\d{3,4}$/
