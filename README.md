@@ -35,6 +35,7 @@ Manage logadm.
 - :size: size is number followed by bytes...kilobytes...etc
 - :period: time period to rotate logs
 - :copy: copy and truncate
+- :nofileok: Prevent an error message if the specifile logfile does not exist
 - :template: template for naming of logs
 - :gzip: specify count of which log to start compressing ( default 1 )
 
