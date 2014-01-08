@@ -22,12 +22,12 @@
 # SOFTWARE.
 #
 
-# TODO Fully implement the -f flag to manage separate logamd conf files.
+# TODO: Fully implement the -f flag to manage separate logamd conf files.
 require 'shellwords'
 require 'chef/mixin/shell_out'
 include Chef::Mixin::ShellOut
 def whyrun_supported?
-    true
+  true
 end
 
 action :create do
@@ -68,7 +68,7 @@ action :create do
 
   unless entries_equal?(@file_hash, @new_hash)
     msg = "logadm add entry. command: #{cmd}"
-    converge_by(msg) do 
+    converge_by(msg) do
       Chef::Log.info(msg)
       shell_out!(cmd)
       new_resource.updated_by_last_action(true)
@@ -84,8 +84,8 @@ action :delete do
   end
 
   @entry = file_entry!
-  if @entry 
-    msg = "logadm delete entry #{new_resource.name}" 
+  if @entry
+    msg = "logadm delete entry #{new_resource.name}"
     converge_by(msg) do
       Chef::Log.info(msg)
       shell_out!(cmd)
@@ -100,16 +100,13 @@ end
 
 # Create a hash of the named entry logadm entry
 def file_entry!
-  # TODO -f
+  # TODO: -f
   if ::File.exists?('/etc/logadm.conf')
     adm_lines = ::File.readlines('/etc/logadm.conf').select { |line| line =~ /^#{new_resource.name}\s/ }
     entry = adm_lines[0]
   else
     entry = ''
   end
-  puts 'ENTRY'
-  puts entry
-  puts new_resource.name
   entry
 end
 
@@ -118,7 +115,7 @@ def populate_entry_hash(cmd)
   # Types of options.  flags have no parms, other options may have different numbers of tokens.
   flags = %w(-c -l -N)
   skip = { 'logadm' => 1, '-f' => 2, '-P' => 2, '-w' => 2 }
-  words = cmd ? Shellwords.split(cmd) : Array.new
+  words = cmd ? Shellwords.split(cmd) : {}
   i = 0
   while i < words.count
     if skip[words[i]]
