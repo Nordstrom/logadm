@@ -1,3 +1,4 @@
+# encoding: utf-8
 name             'logadm'
 maintainer       'ModCloth, Inc.'
 maintainer_email 'github+logadm-cookbook@modcloth.com'

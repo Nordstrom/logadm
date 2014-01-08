@@ -1,4 +1,4 @@
-#
+# encoding: utf-8
 # Copyright (c) 2013 ModCloth, Inc.
 #
 # MIT License
@@ -35,16 +35,16 @@ action :create do
     args << " -a '#{new_resource.postcmd}'" if new_resource.postcmd
     args << " -A '#{new_resource.age}'" if new_resource.age
     args << " -b '#{new_resource.precmd}'" if new_resource.precmd
-    args << " -c" if new_resource.copy
+    args << ' -c' if new_resource.copy
     args << " -C #{new_resource.count}" if new_resource.count
     args << " -e #{new_resource.mailaddr}" if new_resource.mailaddr
     args << " -E #{new_resource.expirecmd}" if new_resource.expirecmd
     args << " -f #{new_resource.conffile}" if new_resource.conffile
     args << " -F #{new_resource.timestampfile}" if new_resource.timestampfile
     args << " -g #{new_resource.group}" if new_resource.group
-    args << " -l" if new_resource.localtime
+    args << ' -l' if new_resource.localtime
     args << " -m #{new_resource.mode}"  if new_resource.mode
-    args << " -N " if new_resource.nofileok
+    args << ' -N ' if new_resource.nofileok
     args << " -o #{new_resource.owner}"  if new_resource.owner
     args << " -p #{new_resource.period}"  if new_resource.period
     args << " -p #{new_resource.period}"  if new_resource.period
@@ -56,17 +56,17 @@ action :create do
     cmd  << ' ' + args.join(' ')
   end
 
-  @entry = get_file_entry!
+  @entry = file_entry!
   @file_hash = populate_entry_hash(@entry)
-  puts "FILEHASH"
+  puts 'FILEHASH'
   puts @file_hash
   @new_hash  = populate_entry_hash(cmd)
-  puts "NEWHASH"
+  puts 'NEWHASH'
   puts @new_hash
 
   Chef::Log.info("logadm command: #{cmd}")
 
-  unless entries_equal?(@file_hash,@new_hash)
+  unless entries_equal?(@file_hash, @new_hash)
     execute "logadm add entry #{new_resource.name}" do
       command cmd
     end
@@ -94,7 +94,7 @@ def load_current_resource
 end
 
 # Create a hash of the named entry logadm entry
-def get_file_entry!
+def file_entry!
   if ::File.exists?('/etc/logadm.conf')
     adm_lines = ::File.readlines('/etc/logadm.conf').select { |line| line =~ /^#{new_resource.name}\s/ }
     entry = adm_lines[0]
@@ -115,8 +115,8 @@ def populate_entry_hash(cmd)
   words = Shellwords.split(cmd)
   puts "Shellwords result #{words}"
   i = 0
-  while i < words.count 
-    if skip[words[i]] 
+  while i < words.count
+    if skip[words[i]]
       i += skip[words[i]]
       next
     end
@@ -126,14 +126,14 @@ def populate_entry_hash(cmd)
       next
     end
     if words[i] =~ /^-/
-      parse_words[words[i]] = words[i+1]
+      parse_words[words[i]] = words[i + 1]
       i += 2
       next
     end
     parse_words[:path] = words[i]
     i += 1
   end
-  puts "PARSEWORDS"
+  puts 'PARSEWORDS'
   puts parse_words
   parse_words
 end
