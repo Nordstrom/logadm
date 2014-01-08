@@ -22,9 +22,13 @@
 # SOFTWARE.
 #
 
+# TODO Fully implement the -f flag to manage separate logamd conf files.
 require 'shellwords'
 require 'chef/mixin/shell_out'
 include Chef::Mixin::ShellOut
+def whyrun_supported?
+    true
+end
 
 action :create do
   if new_resource.manual_command
@@ -58,19 +62,17 @@ action :create do
 
   @entry = file_entry!
   @file_hash = populate_entry_hash(@entry)
-  puts 'FILEHASH'
-  puts @file_hash
   @new_hash  = populate_entry_hash(cmd)
-  puts 'NEWHASH'
-  puts @new_hash
 
-  Chef::Log.info("logadm command: #{cmd}")
+  Chef::Log.debug("logadm command: #{cmd} existing #{@file_hash} new #{@new_hash}")
 
   unless entries_equal?(@file_hash, @new_hash)
-    execute "logadm add entry #{new_resource.name}" do
-      command cmd
+    msg = "logadm add entry. command: #{cmd}"
+    converge_by(msg) do 
+      Chef::Log.info(msg)
+      shell_out!(cmd)
+      new_resource.updated_by_last_action(true)
     end
-    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -81,12 +83,15 @@ action :delete do
     cmd = "logadm -r #{new_resource.name}"
   end
 
-  execute "logadm delete entry #{new_resource.name}" do
-    only_if "logadm -V #{new_resource.name}"
-    command cmd
+  @entry = file_entry!
+  if @entry 
+    msg = "logadm delete entry #{new_resource.name}" 
+    converge_by(msg) do
+      Chef::Log.info(msg)
+      shell_out!(cmd)
+      new_resource.updated_by_last_action(true)
+    end
   end
-
-  new_resource.updated_by_last_action(true)
 end
 
 def load_current_resource
@@ -95,25 +100,25 @@ end
 
 # Create a hash of the named entry logadm entry
 def file_entry!
+  # TODO -f
   if ::File.exists?('/etc/logadm.conf')
     adm_lines = ::File.readlines('/etc/logadm.conf').select { |line| line =~ /^#{new_resource.name}\s/ }
     entry = adm_lines[0]
-    puts 'ENTRY'
-    puts entry
   else
     entry = ''
   end
+  puts 'ENTRY'
+  puts entry
+  puts new_resource.name
   entry
 end
 
 def populate_entry_hash(cmd)
   parse_words = {}
-  # Types of options.  flags have no parms, other options may have different numbers
+  # Types of options.  flags have no parms, other options may have different numbers of tokens.
   flags = %w(-c -l -N)
   skip = { 'logadm' => 1, '-f' => 2, '-P' => 2, '-w' => 2 }
-  # handle -w
-  words = Shellwords.split(cmd)
-  puts "Shellwords result #{words}"
+  words = cmd ? Shellwords.split(cmd) : Array.new
   i = 0
   while i < words.count
     if skip[words[i]]
@@ -133,8 +138,6 @@ def populate_entry_hash(cmd)
     parse_words[:path] = words[i]
     i += 1
   end
-  puts 'PARSEWORDS'
-  puts parse_words
   parse_words
 end
 

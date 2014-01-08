@@ -73,7 +73,7 @@ attribute :path, kind_of: String
 attribute :postcmd, kind_of: String
 attribute :age, regex: /^[0-9]+[hdwmy]$/
 attribute :precmd, kind_of: String
-attribute :copy, kind_of: [TrueClass, FalseCleass], default: true
+attribute :copy, kind_of: [TrueClass, FalseClass], default: true
 attribute :count, kind_of: Integer
 attribute :mailaddr, kind_of: String
 attribute :expirecmd, kind_of: String
