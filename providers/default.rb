@@ -56,7 +56,7 @@ action :create do
     args << " -S #{new_resource.totalsize}"  if new_resource.totalsize
     args << " -t #{new_resource.template}"  if new_resource.template
     args << " -T #{new_resource.logpattern}"  if new_resource.logpattern
-    args << " -z #{new_resource.gzip}"  if new_resource.gzip
+    args << " -z #{new_resource.gzip}"  if new_resource.gzip && node[:os_version] != '5.9'
     cmd  << ' ' + args.join(' ')
   end
 
