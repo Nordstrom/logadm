@@ -1,4 +1,4 @@
-#
+# encoding: utf-8
 # Copyright (c) 2013 ModCloth, Inc.
 #
 # MIT License
@@ -62,22 +62,31 @@
 #        logadm -w apache /var/apache/logs/*_log
 #
 
-
-
 actions :create, :delete
 
 default_action :create
 
-attribute :name, :kind_of => String, :name_attribute => true
-attribute :manual_command, :kind_of => [String, NilClass], :default => nil
-attribute :path, :kind_of => String
-attribute :count, :kind_of => Integer
-# size is number followed by bytes...kilobytes...etc
-attribute :size, :regex => /^[0-9]+[bkmg]$/
-# later should add now and never for period
-attribute :period, :regex => /^[0-9]+[hdwmy]$/
-attribute :copy, :default => true
-attribute :nofileok, :default => false
-attribute :template, :kind_of => String
-attribute :gzip, :kind_of => Integer
-attribute :mode, :regex => /^0?\d{3,4}$/
+attribute :conf_file, kind_of: String
+attribute :name, kind_of: String, name_attribute: true
+attribute :manual_command, kind_of: [String, NilClass], default: nil
+attribute :path, kind_of: String
+attribute :postcmd, kind_of: String
+attribute :age, regex: /^[0-9]+[hdwmy]$/
+attribute :precmd, kind_of: String
+attribute :copy, kind_of: [TrueClass, FalseClass], default: true
+attribute :count, kind_of: Integer
+attribute :mailaddr, kind_of: String
+attribute :expirecmd, kind_of: String
+attribute :timestampfile, kind_of: String
+attribute :conffile, kind_of: String
+attribute :group, kind_of: [String, Integer]
+attribute :localtime, kind_of: [TrueClass, FalseClass], default: false
+attribute :mode, regex: /^0?\d{3,4}$/
+attribute :nofileok, kind_of: [TrueClass, FalseClass], default: false
+attribute :owner, kind_of: [String, Integer]
+attribute :period, regex: /^[0-9]+[hdwmy]$/
+attribute :template, kind_of: String
+attribute :size, regex: /^[0-9]+[bkmg]$/
+attribute :totalsize, regex: /^[0-9]+[bkmg]$/
+attribute :logpattern, kind_of: String
+attribute :gzip, kind_of: Integer
