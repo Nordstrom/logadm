@@ -97,7 +97,7 @@ action_class do
   def populate_entry_hash(cmd)
     parse_words = {}
     # Types of options.  flags have no parms, other options may have different numbers of tokens.
-    flags = %w(-c -l -N)
+    flags = %w[-gc -l -N]
     skip = { :logadm => 1, '-f' => 2, '-P' => 2, '-w' => 2 }
     words = cmd ? Shellwords.split(cmd) : {}
     i = 0
