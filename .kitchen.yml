@@ -19,6 +19,7 @@ platforms:
       kernel:
         machine: 'x86'
     driver_config:
+      require_chef_omnibus: 12.21.31
       box: nordsol10
       box_url: http://uis.nordstrom.net/downloads/vagrant-solaris10u11.box
       customize:
@@ -29,6 +30,7 @@ platforms:
       kernel:
         machine: 'x86'
     driver_config:
+      require_chef_omnibus: 12.13.37
       box: nordsol11
       box_url: http://y0319p297.nordstrom.netdownloads/vagrant-solaris11.box
 

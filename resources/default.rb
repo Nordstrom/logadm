@@ -43,12 +43,10 @@
 #        logadm -w apache /var/apache/logs/*_log
 #
 
-actions :create, :delete
-
 default_action :create
 
 property :conf_file, kind_of: String
-property :name, kind_of: String, name_attribute: true
+property :name, kind_of: String, name_attribute: true # ~FC108
 property :manual_command, kind_of: [String, NilClass], default: nil
 property :path, kind_of: String
 property :postcmd, kind_of: String
@@ -137,6 +135,7 @@ action_class do
 end
 
 action :create do
+  use_inline_resources
   if new_resource.manual_command
     cmd = new_resource.manual_command
   else
@@ -177,12 +176,12 @@ action :create do
     converge_by(msg) do
       Chef::Log.info(msg)
       shell_out!(cmd)
-      new_resource.updated_by_last_action(true)
     end
   end
 end
 
 action :delete do
+  use_inline_resources
   cmd = if new_resource.manual_command
           new_resource.manual_command
         else
@@ -195,7 +194,6 @@ action :delete do
     converge_by(msg) do
       Chef::Log.info(msg)
       shell_out!(cmd)
-      new_resource.updated_by_last_action(true)
     end
   end
 end
