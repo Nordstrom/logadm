@@ -4,7 +4,7 @@ driver:
   vm_hostname: logadm-kitchen
 
 driver_config:
-  require_chef_omnibus: 12.19.36
+  require_chef_omnibus: 12.21.31
 
 provisioner:
   name: chef_zero
@@ -19,7 +19,6 @@ platforms:
       kernel:
         machine: 'x86'
     driver_config:
-      require_chef_omnibus: 12.21.31
       box: nordsol10
       box_url: http://uis.nordstrom.net/downloads/vagrant-solaris10u11.box
       customize:
@@ -30,7 +29,6 @@ platforms:
       kernel:
         machine: 'x86'
     driver_config:
-      require_chef_omnibus: 12.13.37
       box: nordsol11
       box_url: http://y0319p297.nordstrom.netdownloads/vagrant-solaris11.box
 
@@ -39,7 +37,7 @@ platforms:
       kernel:
         machine: 'x86'
     driver_config:
-      require_chef_omnibus: 13.7.16
+      require_chef_omnibus: 13.6.0
       box: nordsol11
       box_url: http://y0319p297.nordstrom.net/downloads/vagrant-solaris11.box
 suites:
