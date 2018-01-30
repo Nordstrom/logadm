@@ -25,7 +25,6 @@
 default['logadm']['write_conf_file'] = true
 default['logadm']['conf_file'] = '/etc/logadm.conf'
 default['logadm']['conf_file_template'] = 'logadm.conf.erb'
-default['logadm']['conf_file_cookbook'] = 'logadm'
 
 default['logadm']['enabled_patterns']['smf'] = true
 default['logadm']['enabled_patterns']['apache'] = false

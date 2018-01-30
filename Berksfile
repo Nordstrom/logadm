@@ -1,3 +1,2 @@
-site :opscode
-
+source :chef_server
 metadata

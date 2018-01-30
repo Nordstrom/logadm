@@ -1,0 +1,51 @@
+---
+driver:
+  name: vagrant
+  vm_hostname: logadm-kitchen
+
+driver_config:
+  require_chef_omnibus: 12.19.36
+
+provisioner:
+  name: chef_zero
+  log_level: info
+#  deprecations_as_errors: true
+
+verifier: inspec
+
+platforms:
+  - name: sol10_12
+    attributes:
+      kernel:
+        machine: 'x86'
+    driver_config:
+      require_chef_omnibus: 12.21.31
+      box: nordsol10
+      box_url: http://uis.nordstrom.net/downloads/vagrant-solaris10u11.box
+      customize:
+        usbehci: 'off'
+
+  - name: sol11_12
+    attributes:
+      kernel:
+        machine: 'x86'
+    driver_config:
+      require_chef_omnibus: 12.13.37
+      box: nordsol11
+      box_url: http://y0319p297.nordstrom.netdownloads/vagrant-solaris11.box
+
+  - name: sol11_13
+    attributes:
+      kernel:
+        machine: 'x86'
+    driver_config:
+      require_chef_omnibus: 13.7.16
+      box: nordsol11
+      box_url: http://y0319p297.nordstrom.net/downloads/vagrant-solaris11.box
+suites:
+  - name: default
+    run_list:
+      - recipe[logadm::default]
+    attributes:
+      rhn_satellite:
+        reg_type: 'optional'

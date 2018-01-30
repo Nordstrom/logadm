@@ -1,10 +1,10 @@
-# encoding: utf-8
-name             'logadm'
-maintainer       'ModCloth, Inc.'
-maintainer_email 'github+logadm-cookbook@modcloth.com'
-license          'MIT'
+name             'logadm' # ~FC078
+maintainer       'Nordstrom, Inc.'
+maintainer_email 'itpcmall@nordstrom.com'
+license          'All rights reserved'
 description      'Installs/Configures logadm'
-version          '0.2.3'
-
-supports 'smartos'
-supports 'solaris'
+version          '0.3.0'
+supports         'solaris2'
+source_url       'https://git.nordstrom.net/projects/ITS/repos/logadm/browse'
+issues_url       'https://jira.nordstrom.net/browse/UIS'
+chef_version     '>= 12.10'

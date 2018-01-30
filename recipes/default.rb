@@ -27,7 +27,6 @@
 
 template node['logadm']['conf_file'] do
   source node['logadm']['conf_file_template']
-  cookbook node['logadm']['conf_file_cookbook']
-  mode 0644
+  mode 0o644
   only_if { node['logadm']['write_conf_file'] }
 end
